@@ -18,7 +18,7 @@ const Report = () => {
   useEffect(() => {
     const fetchReport = async () => {
       try {
-        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+        const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '' : 'http://localhost:5001');
         const response = await axios.get(`${API_URL}/api/report/${id}`);
         setReport(response.data);
       } catch (err) {

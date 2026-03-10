@@ -11,7 +11,7 @@ const History = () => {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+        const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '' : 'http://localhost:5001');
         const response = await axios.get(`${API_URL}/api/history`);
         setReports(response.data);
       } catch (err) {
@@ -30,7 +30,7 @@ const History = () => {
     if (!window.confirm("Are you sure you want to delete this report?")) return;
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+      const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '' : 'http://localhost:5001');
       await axios.delete(`${API_URL}/api/report/${id}`);
       setReports(reports.filter(r => r._id !== id));
     } catch (err) {
@@ -43,7 +43,7 @@ const History = () => {
     if (!window.confirm("Are you sure you want to delete ALL reports? This cannot be undone.")) return;
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+      const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '' : 'http://localhost:5001');
       await axios.delete(`${API_URL}/api/history`);
       setReports([]);
     } catch (err) {
