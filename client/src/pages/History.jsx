@@ -35,7 +35,10 @@ const History = () => {
       setReports(reports.filter(r => r._id !== id));
     } catch (err) {
       console.error("Failed to delete report:", err);
-      alert("Failed to delete report.");
+      let errMsg = "Failed to delete report.";
+      if (err.response?.data?.error) errMsg = err.response.data.error;
+      else if (typeof err.response?.data === 'string') errMsg = err.response.data;
+      alert(errMsg);
     }
   };
 
@@ -48,7 +51,10 @@ const History = () => {
       setReports([]);
     } catch (err) {
       console.error("Failed to clear history:", err);
-      alert("Failed to clear history.");
+      let errMsg = "Failed to clear history.";
+      if (err.response?.data?.error) errMsg = err.response.data.error;
+      else if (typeof err.response?.data === 'string') errMsg = err.response.data;
+      alert(errMsg);
     }
   };
 

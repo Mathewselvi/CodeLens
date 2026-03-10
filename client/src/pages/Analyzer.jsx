@@ -27,7 +27,16 @@ const Analyzer = () => {
         throw new Error("Invalid response from server");
       }
     } catch (err) {
-      setError(err.response?.data?.error || err.message || "An error occurred during analysis.");
+      let errMsg = "An error occurred during analysis.";
+      if (err.response?.data) {
+        if (typeof err.response.data.error === 'string') errMsg = err.response.data.error;
+        else if (typeof err.response.data.message === 'string') errMsg = err.response.data.message;
+        else if (typeof err.response.data === 'string') errMsg = err.response.data;
+        else errMsg = JSON.stringify(err.response.data);
+      } else if (err.message) {
+        errMsg = err.message;
+      }
+      setError(errMsg);
       setLoading(false);
     }
   };
